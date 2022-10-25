@@ -1,37 +1,37 @@
 class Triangle
   def initialize(length, width, height)
-    @length = length
-    @width =  width
-    @height = height
+     @sides = [length, width, height]
   end
 
   def kind
-    sides = [@length, @width, @height].uniq
+    
     if valid_triangle?
-      if sides.count == 1
+      if @sides.uniq.count == 1
         :equilateral
-      elsif sides.count == 2
+      elsif @sides.uniq.count == 2
         :isosceles
       else
         :scalene
       end
-    else
-      "raise TriangleError"
+    else 
+      raise TriangleError
     end
   end
-  # class TriangleError < StandardError
-  # end
+  class TriangleError < StandardError
+    def message
+      "you must give valid sides of a triangle!"
+    end
+  end
+
   private
   def valid_triangle?
-    sides = [@length, @width, @height].sort
-    greatest_side = sides.pop
-    greatest_side < sides.sum 
+    @sides.each {|side| side > 0} && @sides.sort[0] + @sides.sort[1] > @sides.sort[2]
   end  
 end
 
-t1 = Triangle.new(0,0,7)
-pp t1.kind
-Triangle.new(7, 3, 2).kind 
+# t1 = Triangle.new(0,0,7)
+# pp t1.kind
+# Triangle.new(7, 3, 2).kind 
 
 
 
